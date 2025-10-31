@@ -1,4 +1,4 @@
-# 🧬 ABCP_finder
+#  ABCP_finder
 
 **A Command-Line Tool for Predicting Anti-Breast Cancer Peptides (ABCPs)**
 
@@ -7,18 +7,18 @@ It supports both **single-sequence** and **batch predictions** using one or mult
 
 ---
 
-## 🚀 Features
+##  Features
 
-- 🧠 Choose between **ESM-2** or **ProtBERT** embeddings  
-- 🧩 Support for **single model** or **multiple models (directory input)**  
-- 📄 Accepts **direct sequence input** or **FASTA file input**  
-- 🔍 Automatically skips **invalid peptide lengths** (not between 5–51 residues)  
-- ⏱️ Displays **real-time progress** and model information during predictions  
-- 💾 Saves results in a structured **.tsv output file**
+-  Choose between **ESM-2** or **ProtBERT** embeddings  
+-  Support for **single model** or **multiple models (directory input)**  
+-  Accepts **direct sequence input** or **FASTA file input**  
+-  Automatically skips **invalid peptide lengths** (not between 5–51 residues)  
+-  Displays **real-time progress** and model information during predictions  
+-  Saves results in a structured **.tsv output file**
 
 ---
 
-## ⚙️ Installation
+##  Installation
 
 ### 1. Clone the repository
 ```bash
