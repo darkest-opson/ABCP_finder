@@ -27,4 +27,4 @@ cd abcp_finder
 ```
 ### 2. Install dependencies
 ```bash
-pip install torch transformers scikit-learn numpy scipy
+pip install -r requirements.txt
