@@ -25,3 +25,6 @@ It supports both **single-sequence** and **batch predictions** using one or mult
 git clone https://github.com/darkest-opson/ABCP_finder.git
 cd abcp_finder
 ```
+### 2. Install dependencies
+```bash
+pip install torch transformers scikit-learn numpy scipy
