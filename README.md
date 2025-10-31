@@ -27,6 +27,8 @@ cd abcp_finder
 ```
 ### 2. Install dependencies
 ```bash
+conda create -n abcp_finder python=3.12.9
+conda activate abcp_finder
 pip install -r requirements.txt
 ```
 ### 3. (Optional) For GPU acceleration
