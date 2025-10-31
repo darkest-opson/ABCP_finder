@@ -23,4 +23,5 @@ It supports both **single-sequence** and **batch predictions** using one or mult
 ### 1. Clone the repository
 ```bash
 git clone https://github.com/yourusername/abcp-finder.git
-cd abcp-finder
+cd abcp_finder
+```
