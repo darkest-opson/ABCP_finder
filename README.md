@@ -35,13 +35,11 @@ Make sure you have a **PyTorch** version installed with **CUDA** support.
 ---
 
 ## 🧩 Command-Line Arguments
-```
-| Argument | Description | Example |
-|-----------|--------------|----------|
-| `--embedding` | Embedding model to use (`esm2` or `protbert`) | `--embedding esm2` |
-| `--model` | Path to a single `.pkl` model or directory containing multiple models | `--model ./ESM_models/` |
-| `--sequence` | Input peptide sequence for prediction | `--sequence GKLFGKILVGKL` |
-| `--fasta` | Input FASTA file containing multiple peptide sequences | `--fasta peptides.fasta` |
-| `--output` | Path to save results (default: `output_predictions.tsv`) | `--output results.tsv` |
+|  **Argument** | **Description**                                                       | **Example**               |
+| ------------: | --------------------------------------------------------------------- | ------------------------- |
+| `--embedding` | Embedding model to use (`esm2` or `protbert`)                         | `--embedding esm2`        |
+|     `--model` | Path to a single `.pkl` model or directory containing multiple models | `--model ./ESM_models/`   |
+|  `--sequence` | Input peptide sequence for prediction                                 | `--sequence GKLFGKILVGKL` |
+|     `--fasta` | Input FASTA file containing multiple peptide sequences                | `--fasta peptides.fasta`  |
+|    `--output` | Path to save results (default: `output_predictions.tsv`)              | `--output results.tsv`    |
 
-```
