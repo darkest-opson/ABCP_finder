@@ -1,8 +1,8 @@
-# 🧬 ABCP-Finder
+# 🧬 ABCP_finder
 
 **A Command-Line Tool for Predicting Anti-Breast Cancer Peptides (ABCPs)**
 
-ABCP-Finder is a command-line utility that allows users to predict whether a given peptide sequence is anti-cancer using either **ESM-2** or **ProtBERT** embeddings and corresponding trained models.  
+ABCP_finder is a command-line utility that allows users to predict whether a given peptide sequence is anti-cancer using either **ESM-2** or **ProtBERT** embeddings and corresponding trained models.  
 It supports both **single-sequence** and **batch predictions** using one or multiple trained `.pkl` models.
 
 ---
@@ -45,10 +45,14 @@ Make sure you have a **PyTorch** version installed with **CUDA** support.
 
 ### Usage Examples
 1️⃣ Single Model Prediction
-python abcp_finder.py --embedding esm2 --model ./ESM_models/model.pkl --sequence GKLFGKILVGKL
-
+```
+python ABCP_finder.py --embedding esm2 --model ./ESM_models/model.pkl --sequence GKLFGKILVGKL
+```
 2️⃣ Multiple Model Prediction (directory of .pkl models)
-python abcp_finder.py --embedding protbert --model ./ProtBERT_models/ --sequence GKLFGKILVGKL
-
+```
+python ABCP_finder.py --embedding protbert --model ./ProtBERT_models/ --sequence GKLFGKILVGKL
+```
 3️⃣ FASTA Input
-python abcp_finder.py --embedding esm2 --model ./ESM_models/ --fasta peptides.fasta
+```
+python ABCP_finder.py --embedding esm2 --model ./ESM_models/ --fasta peptides.fasta
+```
