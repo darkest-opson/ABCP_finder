@@ -34,7 +34,7 @@ Make sure you have a **PyTorch** version installed with **CUDA** support.
 
 ---
 
-## 🧩 Command-Line Arguments
+## Command-Line Arguments
 |  **Argument** | **Description**                                                       | **Example**               |
 | ------------: | --------------------------------------------------------------------- | ------------------------- |
 | `--embedding` | Embedding model to use (`esm2` or `protbert`)                         | `--embedding esm2`        |
@@ -43,3 +43,12 @@ Make sure you have a **PyTorch** version installed with **CUDA** support.
 |     `--fasta` | Input FASTA file containing multiple peptide sequences                | `--fasta peptides.fasta`  |
 |    `--output` | Path to save results (default: `output_predictions.tsv`)              | `--output results.tsv`    |
 
+### Usage Examples
+1️⃣ Single Model Prediction
+python abcp_finder.py --embedding esm2 --model ./ESM_models/model.pkl --sequence GKLFGKILVGKL
+
+2️⃣ Multiple Model Prediction (directory of .pkl models)
+python abcp_finder.py --embedding protbert --model ./ProtBERT_models/ --sequence GKLFGKILVGKL
+
+3️⃣ FASTA Input
+python abcp_finder.py --embedding esm2 --model ./ESM_models/ --fasta peptides.fasta
