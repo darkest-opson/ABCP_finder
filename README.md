@@ -56,3 +56,27 @@ python ABCP_finder.py --embedding protbert --model ./ProtBERT_models/ --sequence
 ```
 python ABCP_finder.py --embedding esm2 --model ./ESM_models/ --fasta peptides.fasta
 ```
+### Output Format
+Results are saved in a tab-separated (.tsv) file with the following structure:
+| **Peptide**  | **Model**  | **Predicted_Class** | **Prob_Class0** | **Prob_Class1** |
+| ------------ | ---------- | ------------------- | --------------- | --------------- |
+| GKLFGKILVGKL | model1.pkl | 1                   | 0.1234          | 0.8766          |
+| GLYFGKILVGL  | model2.pkl | 0                   | 0.8234          | 0.1766          |
+
+#### Predicted_Class
+0 → Non-ABCP
+1 → ABCP
+
+#### Prob_Class0 / Prob_Class1
+Confidence scores for each predicted class.
+
+### Model Compatibility
+Embedding	Supported Model Directory	Example Model File
+ESM-2	./ESM_models/	esm_classifier.pkl
+ProtBERT	./ProtBERT_models/	protbert_classifier.pkl
+
+### Notes
+Peptide sequences must be 5–51 amino acids in length.
+Models must be trained with compatible embeddings (e.g., ESM-2 models require ESM-2 embeddings).
+When a directory is passed, all .pkl models within it are evaluated.
+Output results are aggregated in one file containing per-sequence, per-model predictions.
