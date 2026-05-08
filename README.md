@@ -1,94 +1,263 @@
-#  ABCP_finder
+# ABCP_finder
 
-**A Command-Line Tool for Predicting Anti-Breast Cancer Peptides (ABCPs)**
+## Anti-Breast Cancer Peptide Prediction Using Transformer-Based Protein Language Models
 
-ABCP_finder is a command-line utility that allows users to predict whether a given peptide sequence is anti-cancer using either **ESM-2** or **ProtBERT** embeddings and corresponding trained models.  
-It supports both **single-sequence** and **batch predictions** using one or multiple trained `.pkl` models.
 
----
+- ProtBERT
+- ESM2
 
-##  Features
-
--  Choose between **ESM-2** or **ProtBERT** embeddings  
--  Support for **single model** or **multiple models (directory input)**  
--  Accepts **direct sequence input** or **FASTA file input**  
--  Automatically skips **invalid peptide lengths** (not between 5–51 residues)  
--  Displays **real-time progress** and model information during predictions  
--  Saves results in a structured **.tsv output file**
+The generated embeddings are classified using trained Multi-Layer Perceptron (MLP) models to identify potential anti-breast cancer peptides.
 
 ---
 
-##  Installation
+# Features
 
-### 1. Clone the repository
+- Supports **ProtBERT**, **ESM2**, or both models simultaneously
+- Accepts peptide sequences in **FASTA format**
+- Automatic CPU/GPU device selection
+- Batch prediction support
+- Generates probability scores for:
+  - ABCP class
+  - Non-ABCP class
+- Saves prediction results in CSV format
+- Compatible with large-scale peptide screening
+
+---
+
+# Installation
+
+## 1. Clone Repository
+
 ```bash
 git clone https://github.com/darkest-opson/ABCP_finder.git
-cd abcp_finder
+cd ABCP_finder
 ```
-### 2. Install dependencies
-```bash
-conda create -n abcp_finder python=3.12.9
-conda activate abcp_finder
-pip install -r requirements.txt
-```
-### 3. (Optional) For GPU acceleration
-Make sure you have a **PyTorch** version installed with **CUDA** support.
 
 ---
 
-## Command-Line Arguments
-|  **Argument** | **Description**                                                       | **Example**               |
-| ------------: | --------------------------------------------------------------------- | ------------------------- |
-| `--embedding` | Embedding model to use (`esm2` or `protbert`)                         | `--embedding esm2`        |
-|     `--model` | Path to a single `.pkl` model or directory containing multiple models | `--model ./ESM_models/`   |
-|  `--sequence` | Input peptide sequence for prediction                                 | `--sequence GKLFGKILVGKL` |
-|     `--fasta` | Input FASTA file containing multiple peptide sequences                | `--fasta peptides.fasta`  |
-|    `--output` | Path to save results (default: `output_predictions.tsv`)              | `--output results.tsv`    |
+## 2. Create Conda Environment
 
-### Usage Examples
-1️⃣ Single Model Prediction
+```bash
+conda create -n abcp_finder python=3.10
+conda activate abcp_finder
 ```
-python ABCP_finder.py --embedding esm2 --model ./ESM_models/model.pkl --sequence GKLFGKILVGKL
+
+---
+
+## 3. Install Dependencies
+
+```bash
+pip install -r requirements.txt
 ```
-2️⃣ Multiple Model Prediction (directory of .pkl models)
+
+---
+
+## 4. Install PyTorch
+
+### CPU Version
+
+```bash
+pip install torch torchvision torchaudio
 ```
-python ABCP_finder.py --embedding protbert --model ./ProtBERT_models/ --sequence GKLFGKILVGKL
+
+### GPU Version (CUDA)
+
+Visit:
+
+https://pytorch.org/get-started/locally/
+
+---
+
+# Directory Structure
+
+```bash
+ABCP_finder/
+│
+├── ABCP_finder.py
+├── requirements.txt
+├── models/
+│   ├── protbert/
+│   │   └── ABCP_mlp_model.pt
+│   │
+│   └── esm/
+│       └── ABCP_mlp_model.pt
+│
+├── example/
+│   └── sample.fasta
+│
+└── output/
 ```
-3️⃣ FASTA Input
+
+---
+
+# Input Format
+
+Input sequences must be provided in FASTA format.
+
+Example:
+
+```fasta
+>peptide_1
+GIMSLFKGVLKTAGKHVAG
+>peptide_2
+KLLKLLKKLLKLLKKK
 ```
-python ABCP_finder.py --embedding esm2 --model ./ESM_models/ --fasta peptides.fasta
+
+---
+
+# Usage
+
+## Basic Command
+
+```bash
+python ABCP_finder.py -i input.fasta
 ```
-### Output Format
-Results are saved in a tab-separated (.tsv) file with the following structure:
-| **Peptide**  | **Model**  | **Predicted_Class** | **Prob_Class0** | **Prob_Class1** |
-| ------------ | ---------- | ------------------- | --------------- | --------------- |
-| GKLFGKILVGKL | model1.pkl | 1                   | 0.1234          | 0.8766          |
-| GLYFGKILVGL  | model2.pkl | 0                   | 0.8234          | 0.1766          |
 
-#### Predicted_Class
+---
 
-0 → Non-ABCP
+# Command-Line Arguments
 
-1 → ABCP
+| Argument | Description | Default |
+|----------|-------------|----------|
+| `-i, --input` | Input FASTA file | Required |
+| `-m, --model` | Prediction model (`protbert`, `esm`, `both`) | `both` |
+| `-o, --output` | Output CSV file | `ABCP_predictions.csv` |
+| `-d, --device` | Compute device (`auto`, `cpu`, `gpu`) | `auto` |
 
-#### Prob_Class0 / Prob_Class1
+---
 
-Confidence scores for each predicted class.
+# Example Commands
 
-### Model Compatibility
+## Predict Using Both Models
 
-Embedding	Supported Model Directory	Example Model File
+```bash
+python ABCP_finder.py \
+-i peptides.fasta \
+-m both \
+-o predictions.csv
+```
 
-ESM-2	./ESM_models/	esm_classifier.pkl
+---
 
-ProtBERT	./ProtBERT_models/	protbert_classifier.pkl
+## Predict Using ProtBERT Only
 
-### Notes
-Peptide sequences must be 5–51 amino acids in length.
+```bash
+python ABCP_finder.py \
+-i peptides.fasta \
+-m protbert
+```
 
-Models must be trained with compatible embeddings (e.g., ESM-2 models require ESM-2 embeddings).
+---
 
-When a directory is passed, all .pkl models within it are evaluated.
+## Predict Using ESM2 Only
 
-Output results are aggregated in one file containing per-sequence, per-model predictions.
+```bash
+python ABCP_finder.py \
+-i peptides.fasta \
+-m esm
+```
 
+---
+
+## Force GPU Usage
+
+```bash
+python ABCP_finder.py \
+-i peptides.fasta \
+-d gpu
+```
+
+---
+
+# Output Format
+
+The prediction output is saved as a CSV file.
+
+Example:
+
+| Sequence_ID | Sequence | ProtBERT_ABCP_probability | ProtBERT_prediction |
+|-------------|----------|---------------------------|---------------------|
+| peptide_1 | GIMSLFKGVLKTAGKHVAG | 0.9213 | 1 |
+| peptide_2 | KLLKLLKKLLKLLKKK | 0.1342 | 0 |
+
+---
+
+# Prediction Labels
+
+| Label | Meaning |
+|------|----------|
+| `1` | Anti-Breast Cancer Peptide |
+| `0` | Non-ABCP |
+
+---
+
+# Models Used
+
+## ProtBERT
+
+- Model: `Rostlab/prot_bert`
+- Source: HuggingFace Transformers
+
+## ESM2
+
+- Model: `facebook/esm2_t33_650M_UR50D`
+- Source: Meta AI
+
+---
+
+# Methodology
+
+1. Read peptide sequences from FASTA
+2. Generate transformer embeddings
+3. Load trained MLP classifier
+4. Predict probabilities
+5. Apply optimized threshold
+6. Export predictions
+
+---
+
+# Requirements
+
+Main dependencies include:
+
+```txt
+torch
+transformers
+numpy
+pandas
+tqdm
+```
+
+---
+
+# Citation
+
+If you use ABCP_finder in your research, please cite:
+
+```text
+ABCP_finder: Transformer-Based Prediction of Anti-Breast Cancer Peptides
+```
+
+---
+
+# License
+
+This project is released under the MIT License.
+
+---
+
+# Contact
+
+For issues, suggestions, or collaborations:
+
+- GitHub Issues
+- Email: your_email@example.com
+
+---
+
+# Acknowledgements
+
+- HuggingFace Transformers
+- Meta AI
+- Rostlab ProtTrans Team
+- PyTorch
